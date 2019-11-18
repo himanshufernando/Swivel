@@ -45,6 +45,7 @@
                         android:textColor="@color/colorTxt" />
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/edittext_username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/appbar_padding_top"
@@ -70,10 +71,11 @@
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:layout_width="match_parent"
+                        android:id="@+id/edittext_email"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/appbar_padding_top"
                         android:layout_marginLeft="@dimen/appbar_padding_top"
-                        android:inputType="text"
+                        android:inputType="textEmailAddress"
                         android:text="@={profile.editTextEmail}"
                         android:textColor="@color/colorTxt" />
                 </LinearLayout>
@@ -106,13 +108,14 @@
                         android:spinnerMode="dropdown" />
 
                     <Button
-                        android:id="@+id/button_more"
+                        android:id="@+id/button_btn_action"
                         android:layout_width="@dimen/button_width"
                         android:layout_height="@dimen/button_height"
                         android:layout_marginEnd="@dimen/appbar_padding_top"
                         android:layout_gravity="end"
-                        android:text="@string/more_button_title"
+                        android:text="@string/register_btn_title"
                         android:background="@color/colorPrimary"
+                        android:onClick="@{() -> profile.insertUser()}"
                         android:textColor="@color/colorWhite"
                         android:layout_marginRight="@dimen/appbar_padding_top" />
                 </LinearLayout>

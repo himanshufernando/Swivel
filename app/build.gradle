@@ -78,10 +78,7 @@ dependencies {
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.lifecycleVersion"
 
-    //reactivex
-    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
-    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjavaVersion"
-    implementation "io.reactivex.rxjava2:rxkotlin:$rootProject.rxkotlinVersion"
+
     //retrofit2
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitGsonVersion"

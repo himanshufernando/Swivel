@@ -23,11 +23,16 @@
     <string name="user_email">Email</string>
     <string name="register_btn_title">Register</string>
 
+    <string name="btn_action_title">Update</string>
 
-    <string name="user_add_messages_name_empty">UserName can not be empty</string>
+
+    <string name="user_add_messages_name_empty">Username can not be empty</string>
     <string name="user_add_messages_email_empty">Email address can not be empty</string>
     <string name="user_add_messages_email_invalid">Email address invalid</string>
     <string name="user_select_messages_preferences_empty">Please select preferences</string>
+
+
+    <string name="user_save_successfully">User save successfully</string>
 
     <string-array name="user_pref_list">
         <item>bitcoin</item>

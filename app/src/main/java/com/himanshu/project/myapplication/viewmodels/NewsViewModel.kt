@@ -13,6 +13,7 @@ import com.himanshu.project.myapplication.data.model.News
 import com.himanshu.project.myapplication.repo.NewsRepository
 import com.himanshu.project.myapplication.services.api.APIInterface
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class NewsViewModel (private val client: APIInterface, val userDOA : UserDao) : ViewModel() {
 

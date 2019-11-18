@@ -9,5 +9,4 @@ class UserTB (
     var userName: String?,
     var userEmail: String?,
     var userPreferences: String?
-){
-}
+)
