@@ -1,0 +1,84 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext {
+        // Sdk and tools
+        compileSdkVersion = 29
+        minSdkVersion = 16
+        targetSdkVersion = 29
+        buildToolsVersion ='29.0.2'
+
+        // App dependencies
+        kotlinVersion = '1.3.50'
+        gradleVersion = '3.5.1'
+        appCompatVersion = '1.1.0'
+        ktxVersion = '1.0.2'
+        constraintLayoutVersion = '1.1.3'
+        lifecycleVersion = '2.2.0-alpha03'
+        recyclerViewVersion = '1.0.0'
+        roomVersion = '2.1.0'
+        viewPagerVersion = '1.0.0-beta03'
+        materialVersion = '1.1.0-alpha09'
+        navigationVersion = '2.0.0'
+        fragmentVersion = '1.1.0-alpha09'
+        workVersion = '2.1.0'
+        gsonVersion = '2.8.2'
+
+        rxandroidVersion = '2.1.1'
+        rxjavaVersion = '2.2.14'
+        rxkotlinVersion = '2.4.0'
+        retrofitVersion = '2.6.2'
+        retrofitGsonVersion = '2.6.2'
+        retrofitRxjava2AdapterVersion = '1.0.0'
+        retrofitScalarsVersion = '2.5.0'
+        okhttpVersion = '4.2.1'
+        daggerVersion = '2.25.2'
+        daggerCompilerVersion = '2.25.2'
+        activityktx = '1.0.0-rc01'
+
+
+        legacySupport='1.0.0'
+        lifecycleExtensions='2.1.0'
+        lifecycleViewmodelKtx='2.1.0'
+        navigationFragmentKtx='2.1.0'
+        navigationUiKtx='2.1.0'
+
+        glideVersion = '4.9.0'
+        glideCompilerVersion = '4.9.0'
+        navigationSafeArgs = '1.0.0-alpha09'
+
+        //test dependencies
+        junitVersion = '4.12'
+        truthVersion = '0.42'
+        workVersion = '2.1.0'
+        uiAutomatorVersion = '2.2.0'
+        testExtJunit = '1.1.0'
+        espressoVersion = '3.1.1'
+        coreTestingVersion = '2.0.0'
+    }
+
+    repositories {
+        google()
+        jcenter()
+        
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:$navigationSafeArgs"
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

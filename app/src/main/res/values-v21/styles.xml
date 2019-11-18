@@ -1,0 +1,8 @@
+
+<resources>
+
+    <style name="Theme.Swive" parent="Base.CardView">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+</resources>
