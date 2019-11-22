@@ -25,30 +25,45 @@ import kotlinx.android.synthetic.main.fragment_headline_news.view.*
 class HeadlineNewsFragment : Fragment() {
 
     private val viewmodel: NewsViewModel by viewModels { NewsViewModel.LiveDataVMFactory }
-    lateinit var binding:FragmentHeadlineNewsBinding
+    lateinit var binding: FragmentHeadlineNewsBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_headline_news, container,false)
-        binding.headline=viewmodel
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_headline_news, container, false)
+        binding.headline = viewmodel
+
+
+        binding.root.swipe_news_headline_refresh_layout.setOnRefreshListener {
+            viewmodel.refreshHeadlineNews()
+        }
+
+
+
         return binding.root
     }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val adapter = HeadlineNewsAdapter()
         binding.root.recyclerview_headline_news_list.adapter = adapter
         subscribeHeadlineNewsToUi(adapter)
     }
+
     private fun subscribeHeadlineNewsToUi(adapter: HeadlineNewsAdapter) {
-        viewmodel.headlineNewsList.observe(viewLifecycleOwner){news ->
-            news.onSuccess {it
+        binding.root.swipe_news_headline_refresh_layout.isRefreshing = true
+        viewmodel.headlineNewsList.observe(viewLifecycleOwner) { news ->
+            news.onSuccess {
+                it
                 adapter.submitList(it.articles)
             }
-            news.onFailure {it
+            news.onFailure {
+                it
                 val networkErrorHandler = NetworkErrorHandler()
                 errorAlertDialog(networkErrorHandler(it))
             }
+            binding.root.swipe_news_headline_refresh_layout.isRefreshing = false
         }
     }
 

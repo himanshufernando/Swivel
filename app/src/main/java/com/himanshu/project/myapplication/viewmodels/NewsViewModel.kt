@@ -9,6 +9,7 @@ import com.himanshu.project.myapplication.Swivel
 import com.himanshu.project.myapplication.data.db.AppDatabase
 import com.himanshu.project.myapplication.data.db.UserDao
 import com.himanshu.project.myapplication.data.model.Article
+import com.himanshu.project.myapplication.data.model.CustomNews
 import com.himanshu.project.myapplication.data.model.News
 import com.himanshu.project.myapplication.repo.NewsRepository
 import com.himanshu.project.myapplication.services.api.APIInterface
@@ -19,52 +20,75 @@ class NewsViewModel (private val client: APIInterface, val userDOA : UserDao) : 
 
     var repo = NewsRepository(client,userDOA)
 
-    //headline ProgressBar
-    val isNewsListLoading = ObservableField<Boolean>()
-    //custom ProgressBar
-    val isCustomNewsListLoading = ObservableField<Boolean>()
+
+
+    private val _selectedArticle = MutableLiveData<Article>()
+    val selectedArticle: LiveData<Article> = _selectedArticle
+
+
+    private val _newsHeadlineStatus = MutableLiveData<Boolean>()
+    val newsHeadlineStatus: LiveData<Boolean> = _newsHeadlineStatus
+
+
+
+    private val _customNewsPreferences = MutableLiveData<CustomNews>()
+    val customNewsPreferences: LiveData<CustomNews> = _customNewsPreferences
 
 
     private val _userPreferences = MutableLiveData<String>()
     val userPreferences: LiveData<String> = _userPreferences
 
-    private val _selectedArticle = MutableLiveData<Article>()
-    val selectedArticle: LiveData<Article> = _selectedArticle
 
     init {
-        _userPreferences.value = "bitcoin"
+        refreshHeadlineNews()
+        _customNewsPreferences.value = CustomNews("bitcoin",true)
+
+
     }
 
 
-    // get headlines
-    val headlineNewsList: LiveData<Result<News>> = liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-        isNewsListLoading.set(true)
-        try {
-            emit(Result.success(repo.getHeadlineNews()))
-            isNewsListLoading.set(false)
-        } catch(ioException: Throwable) {
-            isNewsListLoading.set(false)
-            emit(Result.failure(ioException))
-        }
-    }
-
-    // get custom
-    val customNewsList = userPreferences.switchMap { id ->
+    val headlineNewsList = newsHeadlineStatus.switchMap { _ ->
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-            isCustomNewsListLoading.set(true)
             try {
-                emit(Result.success(repo.getCustomNews(id)))
-                isCustomNewsListLoading.set(false)
+                emit(Result.success(repo.getHeadlineNews()))
             } catch(ioException: Throwable) {
-                isCustomNewsListLoading.set(false)
                 emit(Result.failure(ioException))
             }
         }
     }
 
+    fun refreshHeadlineNews() {
+        _newsHeadlineStatus.value =true
+    }
+
+
+
+
+
+    // get custom
+    val customNewsList = customNewsPreferences.switchMap { id ->
+        liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
+            try {
+                emit(Result.success(repo.getCustomNews(id.userPref)))
+            } catch(ioException: Throwable) {
+                emit(Result.failure(ioException))
+            }
+        }
+    }
+
+    fun refreshCustomNews() {
+        _customNewsPreferences.value = CustomNews(_userPreferences.value!!,true)
+    }
+
+
+
+
+
     fun onSelectUserPreferences(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         var pref = parent!!.getItemAtPosition(position) as String
         _userPreferences.value = pref
+        _customNewsPreferences.value = CustomNews(pref,true)
+
     }
 
     fun setSelectedArticle(article: Article){

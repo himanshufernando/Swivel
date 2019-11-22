@@ -32,6 +32,12 @@ class CustomNewsFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_custom_news, container,false)
         binding.custom=viewmodel
+
+        binding.root.swipe_news_custom_refresh_layout.setOnRefreshListener {
+            viewmodel.refreshCustomNews()
+        }
+
+
         return binding.root
     }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -42,6 +48,7 @@ class CustomNewsFragment : Fragment() {
     }
 
     private fun subscribeCustomNewsToUi(adapter: CustomNewsAdapter) {
+        binding.root.swipe_news_custom_refresh_layout.isRefreshing = true
         viewmodel.customNewsList.observe(viewLifecycleOwner){news ->
             news.onSuccess {it
                 adapter.submitList(it.articles)
@@ -50,6 +57,8 @@ class CustomNewsFragment : Fragment() {
                 val networkErrorHandler = NetworkErrorHandler()
                 errorAlertDialog(networkErrorHandler(it))
             }
+
+            binding.root.swipe_news_custom_refresh_layout.isRefreshing = false
         }
     }
 
